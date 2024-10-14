@@ -1,0 +1,12 @@
+.navEl {
+    transition: 0.7s ease, color 0.7s ease;
+    border-radius: 6px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.navEl:hover {
+    background: #ffffff;
+    color: #333;
+    cursor: pointer;
+}
