@@ -1,8 +1,14 @@
 "use client";
-import Advantages from "@/app/components/advantages/advantages";
+import LandingMain from "./components/advantages/advantages";
+import React from "react";
 import { Navbar } from "@/app/components/navbar/navbar";
 import { axiosWithAuth } from "@/interceptors/interceptors";
 import { useEffect, useState } from "react";
+import { LandingAdvantages } from "./components/landingAdventages/landingAdvantages";
+import { LandingAuditories } from "./components/LandingAuditories/LandingAuditories";
+import { LandingFooter } from "./components/LandingFooter/LandingFooter";
+import dynamic from "next/dynamic";
+const LandingSteps = dynamic(() => import("./components/landingSteps/landingSteps"), { ssr: false });
 
 export default function Home() {
   const [login, setLogin] = useState(false);
@@ -32,11 +38,17 @@ export default function Home() {
   }, []); // Зависимость пустая, чтобы запускать при монтировании
 
   return (
-    <>
+    <div>
       <main className="bg-black">
         <Navbar login={login} />
-        <Advantages />
+        <LandingMain />
+        <LandingAdvantages />
+        <LandingSteps />
+        <LandingAuditories />
       </main>
-    </>
+      <footer className="bg-black">
+        <LandingFooter />
+      </footer>
+    </div>
   );
 }

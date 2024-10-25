@@ -1,12 +1,58 @@
+/* navbar.module.css */
+
 .navEl {
-    transition: 0.7s ease, color 0.7s ease;
-    border-radius: 6px;
-    padding: 5px 10px;
-    cursor: pointer;
+  transition: 0.7s ease, color 0.7s ease;
+  border-radius: 6px;
+  padding: 5px 10px;
+  cursor: pointer;
 }
 
 .navEl:hover {
-    background: #ffffff;
-    color: #333;
-    cursor: pointer;
+  background: #ffffff;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Стили для бокового меню */
+.sideMenu {
+  position: fixed;
+  top: 0;
+  left: -100%; /* Скрыто слева */
+  width: 70%;
+  max-width: 300px;
+  height: 100%;
+  background-color: #111827; /* Темный фон */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+  transition: left 0.3s ease-in-out;
+  z-index: 20;
+}
+
+.sideMenuOpen {
+  left: 0; /* Выезжает на экран */
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Анимация для overlay */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Дополнительные стили для Navbar */
+.navbar {
+  transition: background-color 0.3s ease-in-out;
 }
