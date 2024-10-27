@@ -35,7 +35,7 @@ const ClientPage: React.FC = () => {
     id: "",
   });
   const [showPurchase, setShowPurchase] = useState(false);
-  const [purchases, setPurchases] = useState([]);
+  const [purchases, setPurchases] = useState<any>();
 
   useEffect(() => {
     if (!id) return;
@@ -47,10 +47,7 @@ const ClientPage: React.FC = () => {
         console.log(responseClient.data);
         const dataClient = {
           ...responseClient.data,
-          amount: responseClient.data.cashBackTransaction.reduce(
-            (acc, el) => acc + el.amount,
-            0,
-          ),
+          amount: responseClient.data.cashBackTransaction.reduce((acc: any, el: any) => acc + el.amount, 0),
         };
         console.log(responsePurchases.data);
         setClient(dataClient);
@@ -67,36 +64,22 @@ const ClientPage: React.FC = () => {
   }, [id, showModalUpdate]);
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        Загрузка...
-      </div>
-    );
+    return <div className="flex justify-center items-center h-screen">Загрузка...</div>;
   }
 
   if (error) {
-    return (
-      <div className="flex justify-center items-center h-screen text-red-500">
-        {error}
-      </div>
-    );
+    return <div className="flex justify-center items-center h-screen text-red-500">{error}</div>;
   }
 
   if (!client) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        Клиент не найден.
-      </div>
-    );
+    return <div className="flex justify-center items-center h-screen">Клиент не найден.</div>;
   }
 
   return (
     <div className="flex h-svh">
       <SideBarCabinet />
       <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
-        <h2 className="text-2xl font-semibold mb-6 text-center">
-          Информация о клиенте
-        </h2>
+        <h2 className="text-2xl font-semibold mb-6 text-center">Информация о клиенте</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <h3 className="text-lg font-medium text-gray-700">Имя</h3>
@@ -119,22 +102,13 @@ const ClientPage: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="text-lg font-medium text-gray-700">
-              Процент кешбэка
-            </h3>
-            <p className="mt-1 text-teal-500 font-semibold">
-              {client.cashbackPercentage}%
-            </p>
+            <h3 className="text-lg font-medium text-gray-700">Процент кешбэка</h3>
+            <p className="mt-1 text-teal-500 font-semibold">{client.cashbackPercentage}%</p>
           </div>
 
           <div>
             <h3 className="text-lg font-medium text-gray-700">Общий кешбэк</h3>
-            <p className="mt-1 text-gray-600">
-              $
-              {typeof client.amount === "number"
-                ? client.amount
-                : client.amount}
-            </p>
+            <p className="mt-1 text-gray-600">${typeof client.amount === "number" ? client.amount : client.amount}</p>
           </div>
 
           <div>
@@ -143,9 +117,7 @@ const ClientPage: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="text-lg font-medium text-gray-700">
-              Дата обновления
-            </h3>
+            <h3 className="text-lg font-medium text-gray-700">Дата обновления</h3>
             <p className="mt-1 text-gray-600">{formatDate(client.updatedAt)}</p>
           </div>
           {/* start of buttons */}
@@ -153,32 +125,22 @@ const ClientPage: React.FC = () => {
           <div className="col-span-2 flex justify-between gap-10 min-w-full">
             <button
               className="bg-gray-500 text-white font-bold py-2 px-4 rounded-full border hover:bg-pink-600 hover:shadow-lg transition duration-300 ease-in-out"
-              onClick={() =>
-                setShowModalAdd({ isOpen: true, id: String(client.id) })
-              }
-            >
+              onClick={() => setShowModalAdd({ isOpen: true, id: String(client.id) })}>
               Добавить покупку
             </button>
             <button
               className="bg-gray-500 text-white font-bold py-2 px-4 rounded-full border hover:bg-pink-600 hover:shadow-lg transition duration-300 ease-in-out"
-              onClick={() =>
-                setShowModalBuy({ isOpen: true, id: String(client.id) })
-              }
-            >
+              onClick={() => setShowModalBuy({ isOpen: true, id: String(client.id) })}>
               Списать баллы
             </button>
             <button
               className="bg-gray-500 text-white font-bold py-2 px-4 rounded-full border hover:bg-pink-600 hover:shadow-lg transition duration-300 ease-in-out"
-              onClick={() => setShowModalUpdate(true)}
-            >
+              onClick={() => setShowModalUpdate(true)}>
               Обновить
             </button>
             <button
               className="bg-gray-500 text-white font-bold py-2 px-4 rounded-full border hover:bg-pink-600 hover:shadow-lg transition duration-300 ease-in-out"
-              onClick={() =>
-                setShowModalDelete({ isOpen: true, id: String(client.id) })
-              }
-            >
+              onClick={() => setShowModalDelete({ isOpen: true, id: String(client.id) })}>
               Удалить
             </button>
           </div>
@@ -187,29 +149,17 @@ const ClientPage: React.FC = () => {
             className={`col-span-2 w-2/3 m-auto text-center bg-gray-500 text-white font-bold py-2
                 px-4 rounded-full border hover:bg-pink-600 hover:shadow-lg transition duration-300 ease-in-out
                 ${showPurchase ? "bg-pink-600" : "bg-gray-500"}`}
-            onClick={() => setShowPurchase(!showPurchase)}
-          >
+            onClick={() => setShowPurchase(!showPurchase)}>
             <p>{showPurchase ? "Скрыть покупки" : "Посмотреть покупки"}</p>
           </button>
           {showPurchase && (
-            <div
-              className={`col-span-2 mt-6 space-y-4 transition-opacity duration-500 ease-in-out ${showPurchase ? "opacity-100" : "opacity-0"}`}
-            >
-              <h3 className="text-xl font-semibold mb-4 text-center">
-                Покупки клиента
-              </h3>
+            <div className={`col-span-2 mt-6 space-y-4 transition-opacity duration-500 ease-in-out ${showPurchase ? "opacity-100" : "opacity-0"}`}>
+              <h3 className="text-xl font-semibold mb-4 text-center">Покупки клиента</h3>
               {purchases.length > 0 ? (
-                purchases.map((purchase) => (
-                  <div
-                    key={purchase.id}
-                    className="bg-gray-100 p-4 rounded-lg shadow-md transition duration-300 ease-in-out hover:bg-gray-200"
-                  >
-                    <p className="text-md font-semibold">
-                      Сумма: ${purchase.amount}
-                    </p>
-                    <p className="text-sm text-gray-600">
-                      Дата покупки: {formatDate(purchase.createdAt)}
-                    </p>
+                purchases.map((purchase: any) => (
+                  <div key={purchase.id} className="bg-gray-100 p-4 rounded-lg shadow-md transition duration-300 ease-in-out hover:bg-gray-200">
+                    <p className="text-md font-semibold">Сумма: ${purchase.amount}</p>
+                    <p className="text-sm text-gray-600">Дата покупки: {formatDate(purchase.createdAt)}</p>
                   </div>
                 ))
               ) : (
@@ -219,30 +169,10 @@ const ClientPage: React.FC = () => {
           )}
         </div>
       </div>
-      <ModalClientUpdate
-        isActive={showModalUpdate}
-        onClose={() => setShowModalUpdate(false)}
-        id={client.id}
-        setNewClient={setClient}
-        oldClient={client}
-      />
-      <ModalClientAddPurchase
-        isOpen={showModalAdd}
-        onClose={() => setShowModalAdd({ isOpen: false, id: "" })}
-        setNewClient={setClient}
-        oldClient={client}
-      />
-      <ModalClientBuyBalance
-        isOpen={showModalBuy}
-        onClose={() => setShowModalBuy({ isOpen: false, id: "" })}
-        setNewClient={setClient}
-        oldClient={client}
-      />
-      <ModalClientDelete
-        isOpen={showModalDelete}
-        onClose={() => setShowModalDelete({ isOpen: false, id: "" })}
-        client={client}
-      />
+      <ModalClientUpdate isActive={showModalUpdate} onClose={() => setShowModalUpdate(false)} id={client.id} setNewClient={setClient} oldClient={client} />
+      <ModalClientAddPurchase isOpen={showModalAdd} onClose={() => setShowModalAdd({ isOpen: false, id: "" })} setNewClient={setClient} oldClient={client} />
+      <ModalClientBuyBalance isOpen={showModalBuy} onClose={() => setShowModalBuy({ isOpen: false, id: "" })} setNewClient={setClient} oldClient={client} />
+      <ModalClientDelete isOpen={showModalDelete} onClose={() => setShowModalDelete({ isOpen: false, id: "" })} client={client} />
     </div>
   );
 };
