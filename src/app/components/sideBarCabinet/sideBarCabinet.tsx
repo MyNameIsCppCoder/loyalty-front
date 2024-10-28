@@ -14,7 +14,7 @@ const SideBarCabinet: React.FC<SideBarCabinetProps> = ({ closeSidebar }) => {
 
   const logOut = async () => {
     try {
-      await axiosWithAuth("http://localhost:8080/api/auth/logout");
+      await axiosWithAuth.get("/auth/logout");
       router.push("/");
       console.log("logout");
       if (closeSidebar) closeSidebar();
@@ -54,18 +54,8 @@ const SideBarCabinet: React.FC<SideBarCabinetProps> = ({ closeSidebar }) => {
       {/* Кнопка закрытия бургер-меню на мобильных устройствах */}
       <div className="md:hidden flex justify-end p-4">
         <button onClick={closeSidebar} aria-label="Закрыть меню">
-          <svg
-            className="w-6 h-6 text-gray-700"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
-            />
+          <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
@@ -78,11 +68,8 @@ const SideBarCabinet: React.FC<SideBarCabinetProps> = ({ closeSidebar }) => {
               <button
                 onClick={() => handleItemClick(item)}
                 className={`w-full text-center px-4 py-2 rounded-full font-medium transition-colors duration-300 ${
-                  active
-                    ? "bg-pink-600 text-white"
-                    : "bg-transparent text-gray-700 hover:bg-pink-600 hover:text-white"
-                }`}
-              >
+                  active ? "bg-pink-600 text-white" : "bg-transparent text-gray-700 hover:bg-pink-600 hover:text-white"
+                }`}>
                 {item.label}
               </button>
             </li>

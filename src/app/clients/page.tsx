@@ -14,11 +14,10 @@ const ClientPage = () => {
   const [isModalFindOpen, setIsModalFindOpen] = useState(false);
   const [clients, setClients] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const endpointGetAll = "http://localhost:8080/api/clients/show";
 
-  const reqAllClients = async (endpoint: string) => {
+  const reqAllClients = async () => {
     try {
-      const clients = await axiosWithAuth(endpoint);
+      const clients = await axiosWithAuth.get("clients/show");
       return clients.data;
     } catch (error: any) {
       console.log("Error retrieving clients");
@@ -29,7 +28,7 @@ const ClientPage = () => {
   useEffect(() => {
     const fetchClients = async () => {
       try {
-        const clientsData = await reqAllClients(endpointGetAll);
+        const clientsData = await reqAllClients();
         if (Array.isArray(clientsData)) {
           setClients(clientsData);
         } else {
@@ -46,21 +45,12 @@ const ClientPage = () => {
   return (
     <div className="flex">
       {/* Сайдбар */}
-      <div
-        className={`fixed top-0 left-0 h-full w-64 bg-gray-100 z-50 transform ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300 md:translate-x-0`}
-      >
+      <div className={`fixed top-0 left-0 h-full w-64 bg-gray-100 z-50 transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 md:translate-x-0`}>
         <SideBarCabinet closeSidebar={() => setIsSidebarOpen(false)} />
       </div>
 
       {/* Полупрозрачный фон при открытом сайдбаре на мобильных устройствах */}
-      {isSidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black opacity-50 z-40 md:hidden"
-          onClick={() => setIsSidebarOpen(false)}
-        ></div>
-      )}
+      {isSidebarOpen && <div className="fixed inset-0 bg-black opacity-50 z-40 md:hidden" onClick={() => setIsSidebarOpen(false)}></div>}
 
       {/* Основной контент */}
       <div className="flex-1 ml-0 md:ml-64">
@@ -70,14 +60,8 @@ const ClientPage = () => {
           toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
           isSidebarOpen={isSidebarOpen}
         />
-        <ModalClientCreate
-          isOpen={isModalCreateOpen}
-          onClose={() => setIsModalCreateOpen(false)}
-        />
-        <ModalClientGet
-          isOpen={isModalFindOpen}
-          onClose={() => setIsModalFindOpen(false)}
-        />
+        <ModalClientCreate isOpen={isModalCreateOpen} onClose={() => setIsModalCreateOpen(false)} />
+        <ModalClientGet isOpen={isModalFindOpen} onClose={() => setIsModalFindOpen(false)} />
         <div className="flex flex-col">
           <ClientLine clients={clients} />
         </div>

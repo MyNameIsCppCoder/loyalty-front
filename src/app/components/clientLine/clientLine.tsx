@@ -62,19 +62,13 @@ const ClientLine: React.FC<{ clients: Client[] }> = ({ clients }) => {
     if (sortConfig.key !== key) {
       return null;
     }
-    return sortConfig.direction === "asc" ? (
-      <Image src={SortDown} className="inline-block w-4 h-4 m-1" alt="down" />
-    ) : (
-      <Image src={SortUp} className="inline-block w-4 h-4 m-1" alt="up" />
-    );
+    return sortConfig.direction === "asc" ? <Image src={SortDown} className="inline-block w-4 h-4 m-1" alt="down" /> : <Image src={SortUp} className="inline-block w-4 h-4 m-1" alt="up" />;
   };
 
   const sortedClients = React.useMemo(() => {
     let sortableClients: ClientWithLastVisit[] = clients.map((client) => {
       const lastVisitDate = getLastVisitDate(client);
-      const formattedLastVisitDate = lastVisitDate
-        ? lastVisitDate.toISOString().split("T")[0]
-        : "Не бывал";
+      const formattedLastVisitDate = lastVisitDate ? lastVisitDate.toISOString().split("T")[0] : "Не бывал";
       return {
         ...client,
         lastVisitDate,
@@ -141,67 +135,43 @@ const ClientLine: React.FC<{ clients: Client[] }> = ({ clients }) => {
         <thead className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
           <tr>
             {/* Телефон */}
-            <th
-              className="py-3 px-6 text-left cursor-pointer"
-              onClick={() => handleSort("phone")}
-            >
+            <th className="py-3 px-6 text-left cursor-pointer" onClick={() => handleSort("phone")}>
               <span>Телефон</span> {getSortIndicator("phone")}
             </th>
 
             {/* Имя */}
-            <th
-              className="py-3 px-2 text-left cursor-pointer xl:table-cell lg:table-cell md:table-cell sm:table-cell xs:hidden"
-              onClick={() => handleSort("name")}
-            >
+            <th className="py-3 px-2 text-left cursor-pointer xl:table-cell lg:table-cell md:table-cell sm:table-cell xs:hidden" onClick={() => handleSort("name")}>
               <span>Имя</span> {getSortIndicator("name")}
             </th>
 
             {/* Посещение */}
-            <th
-              className="py-3 px-2 text-left cursor-pointer xl:table-cell lg:table-cell md:table-cell sm:hidden"
-              onClick={() => handleSort("lastVisit")}
-            >
+            <th className="py-3 px-2 text-left cursor-pointer xl:table-cell lg:table-cell md:table-cell sm:hidden" onClick={() => handleSort("lastVisit")}>
               <span>Посещение</span> {getSortIndicator("lastVisit")}
             </th>
 
             {/* Процент */}
-            <th
-              className="py-3 px-2 text-left cursor-pointer xl:table-cell lg:table-cell md:hidden"
-              onClick={() => handleSort("cashbackPercentage")}
-            >
+            <th className="py-3 px-2 text-left cursor-pointer xl:table-cell lg:table-cell md:hidden" onClick={() => handleSort("cashbackPercentage")}>
               <span>Процент</span> {getSortIndicator("cashbackPercentage")}
             </th>
 
             {/* Сумма */}
-            <th
-              className="py-3 px-2 text-left cursor-pointer xl:table-cell lg:hidden"
-              onClick={() => handleSort("totalCashback")}
-            >
+            <th className="py-3 px-2 text-left cursor-pointer xl:table-cell lg:hidden" onClick={() => handleSort("totalCashback")}>
               <span>Сумма</span> {getSortIndicator("totalCashback")}
             </th>
 
             {/* Добавить покупку */}
-            <th className="py-3 px-6 text-left xl:table-cell lg:hidden">
-              Добавить покупку
-            </th>
+            <th className="py-3 px-6 text-left xl:table-cell lg:hidden">Добавить покупку</th>
 
             {/* Посмотреть покупки */}
-            <th className="py-3 px-6 text-left xl:table-cell lg:hidden">
-              Посмотреть покупки
-            </th>
+            <th className="py-3 px-6 text-left xl:table-cell lg:hidden">Посмотреть покупки</th>
 
             {/* Списать баллы */}
-            <th className="py-3 px-6 text-left xl:table-cell lg:hidden">
-              Списать баллы
-            </th>
+            <th className="py-3 px-6 text-left xl:table-cell lg:hidden">Списать баллы</th>
           </tr>
         </thead>
         <tbody className="text-gray-600 text-sm font-light">
           {sortedClients.map((client) => (
-            <tr
-              key={client.id}
-              className="border-b border-gray-200 hover:bg-gray-100"
-            >
+            <tr key={client.id} className="border-b border-gray-200 hover:bg-gray-100">
               {/* Телефон */}
               <td className="py-3 px-6 text-left">
                 <span>{client.phone}</span>
@@ -218,23 +188,16 @@ const ClientLine: React.FC<{ clients: Client[] }> = ({ clients }) => {
               </td>
 
               {/* Процент */}
-              <td className="py-3 px-6 text-left text-teal-500 font-medium xl:table-cell lg:table-cell md:hidden">
-                {client.cashbackPercentage}%
-              </td>
+              <td className="py-3 px-6 text-left text-teal-500 font-medium xl:table-cell lg:table-cell md:hidden">{client.cashbackPercentage}%</td>
 
               {/* Сумма */}
-              <td className="py-3 px-6 text-left font-bold text-gray-700 xl:table-cell lg:hidden">
-                ${client.totalCashback}
-              </td>
+              <td className="py-3 px-6 text-left font-bold text-gray-700 xl:table-cell lg:hidden">${client.totalCashback}</td>
 
               {/* Добавить покупку */}
               <td className="py-3 px-6 text-center font-bold text-gray-700 xl:table-cell lg:hidden">
                 <button
                   className="bg-gray-500 text-white font-bold py-2 px-4 rounded-full border hover:bg-pink-600 hover:shadow-lg transition duration-300 ease-in-out"
-                  onClick={() =>
-                    setShowModal({ isOpen: true, id: client.id.toString() })
-                  }
-                >
+                  onClick={() => setShowModal({ isOpen: true, id: client.id.toString() })}>
                   Добавить
                 </button>
               </td>
@@ -243,8 +206,7 @@ const ClientLine: React.FC<{ clients: Client[] }> = ({ clients }) => {
               <td className="py-3 px-6 text-center font-bold text-gray-700 xl:table-cell lg:hidden">
                 <button
                   className="bg-gray-500 text-white font-bold py-2 px-4 rounded-full border hover:bg-pink-600 hover:shadow-lg transition duration-300 ease-in-out"
-                  onClick={() => router.push(`clients/current/${client.id}`)}
-                >
+                  onClick={() => router.push(`clients/current/${client.id}`)}>
                   Посмотреть
                 </button>
               </td>
@@ -253,10 +215,7 @@ const ClientLine: React.FC<{ clients: Client[] }> = ({ clients }) => {
               <td className="py-3 px-6 text-center font-bold text-gray-700 xl:table-cell lg:hidden">
                 <button
                   className="bg-gray-500 text-white font-bold py-2 px-4 rounded-full border hover:bg-pink-600 hover:shadow-lg transition duration-300 ease-in-out"
-                  onClick={() =>
-                    setShowModal({ isOpen: true, id: client.id.toString() })
-                  }
-                >
+                  onClick={() => setShowModal({ isOpen: true, id: client.id.toString() })}>
                   Списать
                 </button>
               </td>
@@ -264,10 +223,7 @@ const ClientLine: React.FC<{ clients: Client[] }> = ({ clients }) => {
           ))}
         </tbody>
       </table>
-      <ModalClientAddPurchase
-        isOpen={buttonModal}
-        onClose={() => setShowModal({ isOpen: false, id: "" })}
-      />
+      <ModalClientAddPurchase isOpen={buttonModal} onClose={() => setShowModal({ isOpen: false, id: "" })} />
     </div>
   );
 };
