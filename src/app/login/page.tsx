@@ -2,7 +2,7 @@
 import { axiosWithAuth } from "@/interceptors/interceptors";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { useState } from 'react';
+import { useState } from "react";
 
 export default function LoginPage() {
   const {
@@ -10,14 +10,14 @@ export default function LoginPage() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [error, setError] = useState(false)
+  const [error, setError] = useState(false);
   const router = useRouter();
   const onSubmit = async (data: any) => {
     const dataToSend = {
       email: data.email,
       password: data.password,
     };
-    console.log(dataToSend)
+    console.log(dataToSend);
     try {
       const req = await axiosWithAuth.post("auth/login", dataToSend);
       localStorage.setItem("accessToken", req.data.accessToken);
@@ -37,10 +37,7 @@ export default function LoginPage() {
 
   return (
     <div className="bg-gray-50 flex justify-center items-center min-h-screen">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="border border-gray-200 bg-gray-200 flex flex-col justify-center items-center p-10 rounded-2xl"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="border border-gray-200 bg-gray-200 flex flex-col justify-center items-center p-10 rounded-2xl">
         <div className="flex flex-col items-center gap-4 py-5">
           <label>Почта</label>
           <input
@@ -73,17 +70,10 @@ export default function LoginPage() {
         </div>
 
         <div className="flex gap-5">
-          <button
-            type="submit"
-            className="border bg-teal-500 text-white px-3 py-2 rounded"
-          >
+          <button type="submit" className="border bg-teal-500 text-white px-3 py-2 rounded">
             Войти
           </button>
-          <button
-            type="reset"
-            onClick={() => submitBack()}
-            className="border bg-gray-500 text-white px-3 py-2 rounded"
-          >
+          <button type="reset" onClick={() => submitBack()} className="border bg-gray-500 text-white px-3 py-2 rounded">
             Назад
           </button>
         </div>

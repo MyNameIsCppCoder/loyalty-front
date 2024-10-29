@@ -3,13 +3,13 @@ import axios from "axios";
 const options = {
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
-  baseURL: "api/",
+  baseURL: "localhost:3000/api/",
 };
 
 // Функция обновления токена
 const refreshToken = async () => {
   try {
-    const response = await axios.post("api/auth/update-token", {}, options);
+    const response = await axios.post("auth/update-token", {}, options);
     console.log("Token successfully updated");
     localStorage.setItem("accessToken", response.data.accessToken); // Сохраняем новый accessToken
     return response.data.accessToken; // Возвращаем только accessToken

@@ -22,7 +22,7 @@ export const Navbar = ({ login }) => {
   return (
     <nav className={`flex justify-between items-center text-teal-50 py-4 px-6 bg-black fixed w-full z-10 ${styles.navbar}`}>
       <div className="flex items-center">
-        <p className="text-xl font-bold">Btools</p>
+        <p className="text-xl font-bold">Bkits</p>
       </div>
 
       {/* Кнопка бургер-меню (видна только на мобильных) */}

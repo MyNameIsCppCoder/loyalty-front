@@ -8,6 +8,7 @@ import { LandingAdvantages } from "./components/landingAdventages/landingAdvanta
 import { LandingAuditories } from "./components/LandingAuditories/LandingAuditories";
 import { LandingFooter } from "./components/LandingFooter/LandingFooter";
 import dynamic from "next/dynamic";
+import { LandingYM } from "./components/landingYM/landingYM";
 const LandingSteps = dynamic(() => import("./components/landingSteps/landingSteps"), { ssr: false });
 
 export default function Home() {
@@ -45,6 +46,7 @@ export default function Home() {
         <LandingAdvantages />
         <LandingSteps />
         <LandingAuditories />
+        <LandingYM />
       </main>
       <footer className="bg-black">
         <LandingFooter />
